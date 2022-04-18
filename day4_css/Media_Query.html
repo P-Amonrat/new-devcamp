@@ -1,0 +1,24 @@
+<html>
+<head>
+    <style>
+        .default {
+            background-color: yellow;
+            height: 100px;
+        }
+        @media (min-width: 576px) {}
+        @media (min-width: 768px) {}
+        @media (min-width: 992px) {
+            .largeScreen {background-color: pink;}
+            .mobileOnly {display: none;}
+        }
+        @media (min-width: 1200px) {}
+    </style>
+</head>
+
+<body>
+    <div class="mobileOnly">
+        คุณกำลังใช้ Website ผ่านโทรศัพท์มือถือ
+    </div>
+    <div class="default largeScreen">Content</div>
+</body>
+</html>
