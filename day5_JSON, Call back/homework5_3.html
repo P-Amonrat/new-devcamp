@@ -1,0 +1,90 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+        <h1 style="text-align: center">Hello ReqRes users!</h1>
+        <div style="text-align: center">
+            <div id="display" class="row">
+
+        </div>
+        </div>
+
+    <script>
+        let aUser = [];
+        function myfunc1(callback) 
+        {axios.get("https://reqres.in/api/users?delay=3").then(function (response) {
+            // console.log(response);
+            // debugger;
+            let txt = response.data.data;
+            // console.log(txt)
+            for (let i =0; i<txt.length; i++){
+                let obj = { id : txt[i].id,
+                            email : txt[i].email,
+                            firstName : txt[i].first_name,
+                            lastName : txt[i].last_name,
+                            age : null,
+                            gender : null,
+                            avatar : txt[i].avatar      
+                }; 
+                aUser.push(obj);   
+            }
+            callback();
+            
+        })}
+        
+        function myfunc2() { 
+            for (let i =0; i<aUser.length; i++){
+            let thierGender = aUser[i].firstName;
+            axios.get(`https://api.genderize.io?name=${thierGender}`).then(function (response) {
+                // debugger;
+                aUser[i].gender = response.data.gender; 
+            }) 
+            
+            }
+        }
+
+        function myfunc3(callback) {
+            for (let i=0; i<aUser.length; i++){
+                let thierAge = aUser[i].firstName;
+                axios.get(`https://api.agify.io/?name=${thierAge}`).then(function(response){
+                    aUser[i].age = response.data.age;
+                    debugger;
+                })
+            }
+            console.log(aUser);
+
+            let aLastName = aUser.map(n => n.lastName)
+            console.log(aLastName);
+            callback();
+        }
+
+       
+    myfunc1(function () {
+        myfunc2();
+        myfunc3(function (){
+            render();
+        });
+    });  
+function render(){
+    let result = "";
+    for (let i = 0; i < aUser.length; i++){
+      
+    result +=   `<div class="col-sm">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="card-text">${aUser[i].firstName}</p>
+                                        <p class="card-text">${aUser[i].email}</p>
+                                        <p class="card-text">${aUser[i].gender}</p>
+                                        <p class="card-text">${aUser[i].age}</p>
+                                        <img src="${aUser[i].avatar}">
+                                    </div>
+                                </div>
+                            </div>`;  
+    }; 
+    document.getElementById("display").innerHTML = result;   
+}
+
+    </script>
+</body>

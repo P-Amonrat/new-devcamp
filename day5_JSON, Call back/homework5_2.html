@@ -1,0 +1,89 @@
+</html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Covid Data</title>
+    </head>
+    <style>
+        table, tr, td {
+            margin: auto;
+            border: 2px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+    </style>
+
+    <body>
+        <div id = "rowDisplay"></div>
+
+        <script>
+
+            let rowDisplay = document.getElementById("rowDisplay");
+            let covidData = {
+                thailand: {},
+                world:{},
+            };
+            
+            function thailand (callback) {
+                axios.get("https://corona.lmao.ninja/v2/countries/thailand").then(function (response) {
+                // debugger;
+                    covidData.thailand.cases = response.data.cases;
+                    covidData.thailand.todayCases = response.data.todayCases;
+                    covidData.thailand.deaths = response.data.deaths;
+                    covidData.thailand.todayDeaths = response.data.todayDeaths;
+                    covidData.thailand.recovered = response.data.recovered;
+                    covidData.thailand.todayRecovered = response.data.todayRecovered;
+                    covidData.thailand.active = response.data.active;
+                    covidData.thailand.critical = response.data.critical;
+                    callback();
+                });
+            }
+
+            function world(callback){
+                axios.get("https://corona.lmao.ninja/v2/all").then(function (response) {
+                    // debugger;
+                    covidData.world.cases = response.data.cases;
+                    covidData.world.todayCases = response.data.todayCases;
+                    covidData.world.deaths = response.data.deaths;
+                    covidData.world.todayDeaths = response.data.todayDeaths;
+                    covidData.world.recovered = response.data.recovered;
+                    covidData.world.todayRecovered = response.data.todayRecovered;
+                    covidData.world.active = response.data.active;
+                    covidData.world.critical = response.data.critical;
+                    callback();
+                });
+            }
+            let txt = `<table><tr><td>Category</td>`;
+            thailand(function (){
+                for (let x in covidData.thailand){
+                    txt += `<td>`;
+                    txt += x ; 
+                    txt += `</td>`;
+                }
+
+                txt += `</tr><tr><td>World</td>`;
+                world(function(){
+                    for (let y in covidData.world){
+                        txt += `<td>`;
+                        txt += covidData.thailand[y];
+                        txt += `</td>`;
+                    }
+
+                txt += `<tr><td>Thailand</td>`;
+                thailand(function (){
+                    for (let z in covidData.thailand){
+                        txt += `<td>`;
+                        txt += covidData.world[z];
+                        txt += `</td>`;
+                    }
+
+                txt += "</tr></table>";
+                rowDisplay.innerHTML = txt;
+
+                });
+                });
+            });
+
+        </script>
+    </body>
+</html>
+

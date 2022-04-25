@@ -1,0 +1,47 @@
+[
+    {
+        "firstname":"Amonrat",
+        "Lastname":"Pongka",
+        "Age":"24",
+        "Gender":"Female",
+        "Address": {
+            "sub_district":"Hauybong",
+            "District":"Chaleamprakiet",
+            "Provice":"Saraburi"
+        },
+        "Contact":{
+            "Mobile":"0999999999",
+            "Email":"amonrat@gmail.com"
+        }
+    },
+    {
+        "firstname":"Paiboon",
+        "Lastname":"Panusbordee",
+        "Age":"35",
+        "Gender":"Male",
+        "Address": {
+            "sub_district":"Mahasawasd",
+            "District":"Bangkrew",
+            "Provice":"Nonthaburi"
+        },
+        "Contact":{
+            "Mobile":"0999999999",
+            "Email":"paiboonpa@thaiprogrammer.org"
+        }
+    },
+    {
+        "firstname":"Peter",
+        "Lastname":"Parker",
+        "Age":"17",
+        "Gender":"Male",
+        "Address": {
+            "sub_district":"Chrystie Street",
+            "District":"Manhattan",
+            "Provice":"New York"
+        },
+        "Contact":{
+            "Mobile":"0999999999",
+            "Email":"spiderman@marvel.com"
+        }
+    }
+]

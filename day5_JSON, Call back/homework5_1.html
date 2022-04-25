@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <style>
+        table{
+            margin: auto;   
+        }
+        td{
+            text-align: center;
+        }
+        .header{
+            text-align: center;
+            font-size: 30px;
+        }
+    </style>
+
+    <body>
+        <p class = "header">Hello ReqRes users!</p>
+        <table><tr id = "rowDisplay"></tr></table>
+        <script>
+            axios.get("https://reqres.in/api/users").then(function (response) {
+                debugger;
+                let rowDisplay = document.getElementById("rowDisplay");
+                let textHtml = "";
+                for (let i=0; i<response.data.data.length; i++) {
+                    let name = "<p>" + response.data.data[i].first_name + "</p>";
+                    let email = "<p>" + response.data.data[i].email + "</p>";
+                    let img = "<p><img src='" + response.data.data[i].avatar + "'></p>";
+                    textHtml += "<td>" + name + email + img; + "</td>";
+                }
+                rowDisplay.innerHTML = textHtml;
+            });
+        </script>
+    </body>
+</html>
