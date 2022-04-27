@@ -1,0 +1,19 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <script>
+        axios.get("https://disease.sh/v3/covid-19/countries/").then(function (response) {
+            let allCovidData = response.data;
+            let recovered = allCovidData.reduce((sum, num) => sum + num.todayRecovered, 0);
+            console.log(recovered);
+            let countries = allCovidData
+                .filter((death) => (death.todayDeaths < 10) && (death.population > 100000000))
+                .map((x) => x.country);
+            console.log(countries);
+            debugger;
+        })
+    </script>
+</body>
+
