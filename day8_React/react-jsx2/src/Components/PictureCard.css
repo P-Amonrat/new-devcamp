@@ -1,0 +1,18 @@
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: 1000px;
+    margin-top: 100px;
+  }
+  
+  .item{
+    text-align: center;
+    margin: 10px 10px;
+    background-color: cadetblue;
+  }
+  
+  .pict{
+    margin: 10px;
+  }
