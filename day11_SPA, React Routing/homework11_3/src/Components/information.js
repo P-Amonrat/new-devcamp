@@ -77,7 +77,5 @@ const employeeData = [
         salary: '42000'
     }
 ];
-
-console.log("bb" + employeeData);
   
   export default employeeData;
