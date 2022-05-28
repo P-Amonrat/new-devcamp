@@ -4,7 +4,6 @@ import './App.css';
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Avatar, Table, } from 'antd';
-import { responsiveMap } from 'antd/lib/_util/responsiveObserve';
 
 const columns = [
   {
