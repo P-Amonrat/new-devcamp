@@ -1,0 +1,23 @@
+.block {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hello {
+    padding: 20px;
+    margin-right: 100px;
+    margin-top: 30px;
+    font-size: large;
+    background-color: gray;
+}
+
+.cart {
+    padding: 20px;
+    margin-left: 80px;
+}
+
+.btn {
+    margin-top: 80px;
+}
+
