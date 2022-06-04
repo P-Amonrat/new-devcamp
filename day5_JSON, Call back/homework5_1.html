@@ -1,36 +1,62 @@
-<html>
-    <head>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    </head>
-    <style>
-        table{
-            margin: auto;   
-        }
-        td{
-            text-align: center;
-        }
-        .header{
-            text-align: center;
-            font-size: 30px;
-        }
-    </style>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</head>
 
-    <body>
-        <p class = "header">Hello ReqRes users!</p>
-        <table><tr id = "rowDisplay"></tr></table>
-        <script>
+<body>
+    <h1 style="text-align: center">Hello ReqRes users!</h1>
+    <div style="text-align: center">
+        <div id="display" class="row"></div>
+    </div>
+    <script>
+        let result = [];
+
+        function myfunc1(callback) {
             axios.get("https://reqres.in/api/users").then(function (response) {
+                console.log(response)
+                let list = response.data.data
+                console.log(list)
+                result = list
+                    .map(x => {
+                        let obj = {
+                            firstName: x.first_name,
+                            email: x.email,
+                            image: x.avatar
+                        }
+                        return (obj)
+                    });
+                console.log(result)
+                callback()
                 debugger;
-                let rowDisplay = document.getElementById("rowDisplay");
-                let textHtml = "";
-                for (let i=0; i<response.data.data.length; i++) {
-                    let name = "<p>" + response.data.data[i].first_name + "</p>";
-                    let email = "<p>" + response.data.data[i].email + "</p>";
-                    let img = "<p><img src='" + response.data.data[i].avatar + "'></p>";
-                    textHtml += "<td>" + name + email + img; + "</td>";
-                }
-                rowDisplay.innerHTML = textHtml;
-            });
-        </script>
-    </body>
-</html>
+            })
+        }
+
+        function myfunc2() {
+            let txt = '';
+
+            for (let i = 0; i < result.length; i++) {
+                txt += ` <div class="col-sm">
+                                <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">${result[i].firstName}</p>
+                                    <p class="card-text">${result[i].email}</p>
+                                    <img src="${result[i].image}">
+                                </div>
+                                </div>
+                            </div>
+                        </div>`
+
+                document.getElementById("display").innerHTML = txt;
+            }
+        }
+
+        myfunc1(function () {
+            myfunc2()
+        })
+
+    </script>
+</body>

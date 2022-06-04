@@ -21,7 +21,7 @@
                                                              gender: data.gender,
                                                              company: data.company,
                                                              email: data.email,
-                                                             friends: data.friends.reduce((sum,x) => {return sum+`<br>`+x.name} , "") ,                   
+                                                             friends: data.friends.reduce((sum,x) => {return sum+`<br>`+x.name+1} , '') ,                   
                                                              balance: parseFloat(data.balance.replace("$","").replace(",","")/10).toString()
                                                             }
                                                 return obj;})

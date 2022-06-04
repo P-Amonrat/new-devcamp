@@ -1,0 +1,357 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>รายงานสถานการณ์ COVID-19 ประจำวัน</title>
+</head>
+<body>
+    <h1 style="text-align: center; border: 20px solid aquamarine; background-color: aquamarine;">ข้อมูลจำนวนผู้ติดเชื้อ COVID-19 ในประเทศไทย</h1>
+    <div class="container">
+        <p style="font-size: 30px; ">สถานการณ์ผู้ติดเชื้อ COVID-19 อัพเดทรายวัน</p>
+        <div>
+            <button id="btn-thailand" type="submit" class="btn btn-secondary btn-lg">รวมทั่วประเทศไทย</button>
+            <button id="btn-central" type="submit" class="btn btn-secondary btn-lg">ภาคกลาง</button>
+            <button id="btn-north" type="submit" class="btn btn-secondary btn-lg">ภาคเหนือ</button>
+            <button id="btn-northEast" type="button" class="btn btn-secondary btn-lg">ภาคตะวันออกเฉียงเหนือเหนือ</button>
+            <button id="btn-east" type="button" class="btn btn-secondary btn-lg">ภาคตะวันออก</button>
+            <button id="btn-west" type="button" class="btn btn-secondary btn-lg">ภาคตะวันตก</button>
+            <button id="btn-south" type="button" class="btn btn-secondary btn-lg">ภาคใต้</button>
+        </div>
+        <p id="today-date" class="mt-5"></p>
+    </div>
+    <div id = "display"></div>
+    <script>
+        const date = new Date();
+        const result = date.toLocaleDateString('th-TH')
+            document.getElementById("today-date").innerHTML = "วันที่: " + result;
+        let thailand = [];
+        let east = [];
+        let central = [];
+        let north = [];
+        let northEast = [];
+        let west = [];
+        let south = [];
+
+        // function thailand(callback){
+            axios.get("https://covid19.ddc.moph.go.th/api/Cases/today-cases-all").then(function(response){
+                console.log(response);
+                let search = response.data;
+                console.log(search);
+                thailand = search
+                    .map(x => { let obj = { thailandNewCase : x.new_case,
+                                            thailandTotalCase : x.total_case,
+                                            thailandNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            thailandTotalCaseExclueabroad : x.total_case_excludeabroad,
+                                            thailandNewRecovered : x.new_recovered,
+                                            thailandTotalRecovered : x.total_recovered,
+                                            thailandNewDeath : x.new_death,
+                                            thailandTotalDeath : x.total_death
+                                          }
+                                return obj });
+                    console.log(thailand);
+                    callback();
+            })
+        // }
+        
+        function province(callback){
+            axios.get("https://covid19.ddc.moph.go.th/api/Cases/today-cases-by-provinces").then(function(response){
+                // debugger;
+                console.log(response);
+                let search = response.data;
+                console.log(search);
+                // debugger;
+                east = search
+                    .filter((data) => (data.province == "จันทบุรี") || (data.province == "ฉะเชิงเทรา") || (data.province == "ชลบุรี") || (data.province == "ตราด") || (data.province == "ปราจีนบุรี") || (data.province == "ระยอง") || (data.province == "สระแก้ว"))
+                    .map(x => { let obj = { eastProvince : x.province,
+                                            eastNewCase : x.new_case,
+                                            eastTotalCase : x.total_case,
+                                            eastNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            eastTotalCaseExcludeabroad : x.total_case_excludeabroad,
+                                            eastNewDeath : x.new_death,
+                                            eastTotalDeath : x.total_death
+                                        }
+                                    return obj });
+                    console.log(east);
+
+                central = search
+                    .filter((data) => (data.province == "กรุงเทพมหานคร") || (data.province == "กำแพงเพชร") || (data.province == "ชัยนาท")||(data.province == "นครนายก")||(data.province == "นครปฐม")||(data.province == "นครสวรรค์")||(data.province == "นนทบุรี")||(data.province == "ปทุมธานี")||
+                                    (data.province == "พระนครศรีอยุธยา")||(data.province == "พิจิตร")||(data.province == "พิษณุโลก")||(data.province == "ลพบุรี")||(data.province == "สมุทรปราการ")||(data.province == "สมุทรสงคราม")||(data.province == "สมุทรสาคร")||(data.province == "สระบุรี")||(data.province == "สิงห์บุรี")||
+                                    (data.province == "สุพรรณบุรี")||(data.province == "สุโขทัย")||(data.province == "อ่างทอง")||(data.province == "อุทัยธานี")||(data.province == "เพชรบูรณ์"))
+                    .map(x => { let obj = { centralProvince : x.province,
+                                            centralNewCase : x.new_case,
+                                            centralTotalCase : x.total_case,
+                                            centralNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            centralTotalCaseExcludeabroad : x.total_case_excludeabroad,
+                                            centralNewDeath : x.new_death,
+                                            centralTotalDeath : x.total_death
+                                        }
+                                    return obj });
+                    console.log(central);
+
+                north = search
+                    .filter((data) => (data.province == "น่าน") || (data.province == "พะเยา") || (data.province == "ลำปาง")||(data.province == "ลำพูน")||(data.province == "อุตรดิตถ์")||(data.province == "เชียงราย")||(data.province == "เชียงใหม่")||(data.province == "แพร่")|| (data.province == "แม่ฮ่องสอน"))
+                    .map(x => { let obj = { northProvince : x.province,
+                                            northNewCase : x.new_case,
+                                            northTotalCase : x.total_case,
+                                            northNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            northTotalCaseExcludeabroad : x.total_case_excludeabroad,
+                                            northNewDeath : x.new_death,
+                                            northTotalDeath : x.total_death
+                                        }
+                                    return obj });
+                    console.log(north);
+
+                northEast = search
+                    .filter((data) => (data.province == "กาฬสินธุ์") || (data.province == "ขอนแก่น") || (data.province == "ชัยภูมิ")||(data.province == "นครพนม")||(data.province == "นครราชสีมา")||(data.province == "บึงกาฬ")||(data.province == "บุรีรัมย์")||(data.province == "มหาสารคาม")||
+                                    (data.province == "มุกดาหาร")||(data.province == "ยโสธร")||(data.province == "ร้อยเอ็ด")||(data.province == "ศรีสะเกษ")||(data.province == "สกลนคร")||(data.province == "สุรินทร์")||(data.province == "หนองคาย")||(data.province == "หนองบัวลำภู")||(data.province == "อำนาจเจริญ")||
+                                    (data.province == "อุดรธานี")||(data.province == "อุบลราชธานี")||(data.province == "เลย"))
+                    .map(x => { let obj = { northEastProvince : x.province,
+                                            northEastNewCase : x.new_case,
+                                            northEastTotalCase : x.total_case,
+                                            northEastNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            northEastTotalCaseExcludeabroad : x.total_case_excludeabroad,
+                                            northEastNewDeath : x.new_death,
+                                            northEastTotalDeath : x.total_death
+                                        }
+                                    return obj });
+                    console.log(northEast);
+
+                west = search
+                    .filter((data) => (data.province == "กาญจนบุรี") || (data.province == "ตาก") || (data.province == "ประจวบคีรีขันธ์")||(data.province == "ราชบุรี")||(data.province == "เพชรบุรี"))
+                    .map(x => { let obj = { westProvince : x.province,
+                                            westNewCase : x.new_case,
+                                            westTotalCase : x.total_case,
+                                            westNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            westTotalCaseExcludeabroad : x.total_case_excludeabroad,
+                                            westNewDeath : x.new_death,
+                                            westTotalDeath : x.total_death
+                                        }
+                                    return obj });
+                    console.log(west);
+
+                south = search
+                    .filter((data) => (data.province == "กระบี่") || (data.province == "ชุมพร") || (data.province == "ตรัง")||(data.province == "นครศรีธรรมราช")||(data.province == "นราธิวาส")||(data.province == "ปัตตานี")||(data.province == "พังงา")||(data.province == "พัทลุง")||
+                                    (data.province == "ภูเก็ต")||(data.province == "ยะลา")||(data.province == "ระนอง")||(data.province == "สงขลา")||(data.province == "สตูล")||(data.province == "สุราษฎร์ธานี"))
+                    .map(x => { let obj = { southProvince : x.province,
+                                            southNewCase : x.new_case,
+                                            southTotalCase : x.total_case,
+                                            southNewCaseExcludeabroad : x.new_case_excludeabroad,
+                                            southTotalCaseExcludeabroad : x.total_case_excludeabroad,
+                                            southNewDeath : x.new_death,
+                                            southTotalDeath : x.total_death
+                                        }
+                                    return obj });
+                    console.log(south);
+                    callback();
+            });
+        };
+
+        // function onClickThailand(){
+        //     let result = `<div class="container">
+        //                         <div class="boarder">จำนวนผู้ติดเชื้อรายใหม่ทั้งหมด</div>`
+        //         result += `</div>`
+        //         document.getElementById("display").innerHTML = result;
+        // }
+
+        function onClickCentral(){
+            let result =    `<div class="container">
+                                <table class="table table-bordered">
+                                    <thead class="table-secondary text-center align-middle">
+                                        <tr>
+                                            <th scope="col">รายชื่อจังหวัด</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตทั้งหมด (ราย)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success text-center">`
+                                        
+            for (let i=0; i<central.length; i++){
+                        result +=       `<tr> 
+                                            <td class="text-start">${central[i].centralProvince}</td>
+                                            <td>${central[i].centralNewCase}</td>
+                                            <td>${central[i].centralTotalCase}</td>
+                                            <td>${central[i].centralNewCaseExcludeabroad}</td>
+                                            <td>${central[i].centralTotalCaseExcludeabroad}</td>
+                                            <td>${central[i].centralNewDeath}</td>
+                                            <td>${central[i].centralTotalDeath}</td>
+                                        </tr>`
+            };                        
+                    result +=   `</tbody></table></div>`
+                    document.getElementById("display").innerHTML = result;
+        }; 
+        
+        function onClickNorth(){
+            let result =    `<div class="container">
+                                <table class="table table-bordered">
+                                    <thead class="table-secondary text-center align-middle">
+                                        <tr>
+                                            <th scope="col">รายชื่อจังหวัด</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตทั้งหมด (ราย)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success text-center">`
+                                        
+            for (let i=0; i<north.length; i++){
+                        result +=       `<tr> 
+                                            <td class="text-start">${north[i].northProvince}</td>
+                                            <td>${north[i].northNewCase}</td>
+                                            <td>${north[i].northTotalCase}</td>
+                                            <td>${north[i].northNewCaseExcludeabroad}</td>
+                                            <td>${north[i].northTotalCaseExcludeabroad}</td>
+                                            <td>${north[i].northNewDeath}</td>
+                                            <td>${north[i].northTotalDeath}</td>
+                                        </tr>`
+            };                        
+                    result +=   `</tbody></table></div>`
+                    document.getElementById("display").innerHTML = result;
+        }; 
+        
+        function onClickNorthEast(){
+            let result =    `<div class="container">
+                                <table class="table table-bordered">
+                                    <thead class="table-secondary text-center align-middle">
+                                        <tr>
+                                            <th scope="col">รายชื่อจังหวัด</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตทั้งหมด (ราย)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success text-center">`  
+                                        
+            for (let i=0; i<northEast.length; i++){
+                        result +=       `<tr> 
+                                            <td class="text-start">${northEast[i].northEastProvince}</td>
+                                            <td>${northEast[i].northEastNewCase}</td>
+                                            <td>${northEast[i].northEastTotalCase}</td>
+                                            <td>${northEast[i].northEastNewCaseExcludeabroad}</td>
+                                            <td>${northEast[i].northEastTotalCaseExcludeabroad}</td>
+                                            <td>${northEast[i].northEastNewDeath}</td>
+                                            <td>${northEast[i].northEastTotalDeath}</td>
+                                        </tr>`
+            };                        
+                    result +=   `</tbody></table></div>`
+                    document.getElementById("display").innerHTML = result;
+        }; 
+
+        function onClickEast(){
+            let result =    `<div class="container">
+                                <table class="table table-bordered">
+                                    <thead class="table-secondary text-center align-middle">
+                                        <tr>
+                                            <th scope="col">รายชื่อจังหวัด</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตทั้งหมด (ราย)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success text-center">`  
+                                        
+            for (let i=0; i<east.length; i++){
+                        result +=       `<tr> 
+                                            <td class="text-start">${east[i].eastProvince}</td>
+                                            <td>${east[i].eastNewCase}</td>
+                                            <td>${east[i].eastTotalCase}</td>
+                                            <td>${east[i].eastNewCaseExcludeabroad}</td>
+                                            <td>${east[i].eastTotalCaseExcludeabroad}</td>
+                                            <td>${east[i].eastNewDeath}</td>
+                                            <td>${east[i].eastTotalDeath}</td>
+                                        </tr>`
+            };                        
+                    result +=   `</tbody></table></div>`
+                    document.getElementById("display").innerHTML = result;
+        }; 
+
+        function onClickWest(){
+            let result =    `<div class="container">
+                                <table class="table table-bordered">
+                                    <thead class="table-secondary text-center align-middle">
+                                        <tr>
+                                            <th scope="col">รายชื่อจังหวัด</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตทั้งหมด (ราย)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success text-center">`  
+                                        
+            for (let i=0; i<west.length; i++){
+                        result +=       `<tr> 
+                                            <td class="text-start">${west[i].westProvince}</td>
+                                            <td>${west[i].westNewCase}</td>
+                                            <td>${west[i].westTotalCase}</td>
+                                            <td>${west[i].westNewCaseExcludeabroad}</td>
+                                            <td>${west[i].westTotalCaseExcludeabroad}</td>
+                                            <td>${west[i].westNewDeath}</td>
+                                            <td>${west[i].westTotalDeath}</td>
+                                        </tr>`
+            };                        
+                    result +=   `</tbody></table></div>`
+                    document.getElementById("display").innerHTML = result;
+        }; 
+
+        function onClickSouth(){
+            let result =    `<div class="container">
+                                <table class="table table-bordered">
+                                    <thead class="table-secondary text-center align-middle">
+                                        <tr>
+                                            <th scope="col">รายชื่อจังหวัด</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อรายใหม่ (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้ติดเชื้อทั้งหมด (ไม่รวมต่างประเทศ) (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตรายใหม่ (ราย)</th>
+                                            <th scope="col">จำนวนผู้เสียชีวิตทั้งหมด (ราย)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success text-center">`  
+                                        
+            for (let i=0; i<south.length; i++){
+                        result +=       `<tr> 
+                                            <td class="text-start">${south[i].southProvince}</td>
+                                            <td>${south[i].southNewCase}</td>
+                                            <td>${south[i].southTotalCase}</td>
+                                            <td>${south[i].southNewCaseExcludeabroad}</td>
+                                            <td>${south[i].southTotalCaseExcludeabroad}</td>
+                                            <td>${south[i].southNewDeath}</td>
+                                            <td>${south[i].southTotalDeath}</td>
+                                        </tr>`
+            };                        
+                    result +=   `</tbody></table></div>`
+                    document.getElementById("display").innerHTML = result;
+        }; 
+        
+        // document.getElementById("btn-thailand").addEventListener("click", onClickThailand)
+        document.getElementById("btn-central").addEventListener("click", onClickCentral)
+        document.getElementById("btn-north").addEventListener("click", onClickNorth)
+        document.getElementById("btn-northEast").addEventListener("click", onClickNorthEast)
+        document.getElementById("btn-east").addEventListener("click", onClickEast)
+        document.getElementById("btn-west").addEventListener("click", onClickWest)
+        document.getElementById("btn-south").addEventListener("click", onClickSouth)
+    
+            
+        province(function() {
+            onClickCentral();
+        });
+
+        
+    </script>
+</body>

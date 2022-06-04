@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    
+    <body>
+        <script>
+            let aUser = [];
+             function getUser(userId, callback) {
+                axios.get("https://reqres.in/api/users/"+userId).then(function (response) {
+                    console.log(response.data.data)
+                    aUser.push(response.data.data)
+                    callback();
+                })
+            }
+            getUser(1, function(){
+                getUser(2, function(){
+                    console.log(aUser);
+                });
+            });
+        </script>
+    </body>
+    
+</html>

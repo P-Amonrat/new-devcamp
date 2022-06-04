@@ -14,7 +14,7 @@
     <script>
         let aUser = [];
         function myfunc1(callback) 
-        {axios.get("https://reqres.in/api/users?delay=3").then(function (response) {
+        {axios.get("https://reqres.in/api/users").then(function (response) {
             // console.log(response);
             // debugger;
             let txt = response.data.data;
@@ -40,6 +40,7 @@
             axios.get(`https://api.genderize.io?name=${thierGender}`).then(function (response) {
                 // debugger;
                 aUser[i].gender = response.data.gender; 
+                document.getElementById(`gen-${i}`).innerHTML = aUser[i].gender;
             }) 
             
             }
@@ -50,6 +51,7 @@
                 let thierAge = aUser[i].firstName;
                 axios.get(`https://api.agify.io/?name=${thierAge}`).then(function(response){
                     aUser[i].age = response.data.age;
+                    document.getElementById(`age-${i}`).innerHTML = aUser[i].age;
                     debugger;
                 })
             }
@@ -76,8 +78,8 @@ function render(){
                                     <div class="card-body">
                                         <p class="card-text">${aUser[i].firstName}</p>
                                         <p class="card-text">${aUser[i].email}</p>
-                                        <p class="card-text">${aUser[i].gender}</p>
-                                        <p class="card-text">${aUser[i].age}</p>
+                                        <p class="card-text" id="gen-${i}">${aUser[i].gender}</p>
+                                        <p class="card-text" id="age-${i}">${aUser[i].age}</p>
                                         <img src="${aUser[i].avatar}">
                                     </div>
                                 </div>

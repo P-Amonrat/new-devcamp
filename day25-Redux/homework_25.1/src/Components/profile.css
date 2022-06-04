@@ -1,0 +1,10 @@
+.show {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-end;
+}
+
+h2 {
+    padding: 20px;
+    margin: 20px;
+}

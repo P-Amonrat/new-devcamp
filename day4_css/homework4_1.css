@@ -1,20 +1,14 @@
 .flex-container {
+    flex-wrap: wrap;
     display: flex;
-    display: wrap;
     justify-content: center;
-    flex-direction: row;
-    align-items: stretch;
+    
+}
 
+.col {
+    align-items: center;
 }
-.flex-container1 {
-    flex-direction: column;
-}
-.flex-container2 {
-    flex-direction: column;
-}
-.flex-container3 {
-    flex-direction: column;
-}
+
 .item {
     margin: 10px;
 }

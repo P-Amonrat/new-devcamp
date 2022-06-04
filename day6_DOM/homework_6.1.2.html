@@ -22,7 +22,7 @@
         let pattern = /\B(?=(\d{3})+(?!\d))/g;
 
         function myfunc(){
-            let text = document.getElementByID("input").value;
+            let text = document.getElementById("input").value;
             document.getElementById("input").value = text
                 .toString()
                 .replace(",", "")
