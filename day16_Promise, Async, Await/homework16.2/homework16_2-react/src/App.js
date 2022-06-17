@@ -8,28 +8,28 @@ import { Avatar, Table, } from 'antd';
 const columns = [
   {
     title: 'ID',
-    dataIndex: 'ID',
-    key: 'ID',
+    dataIndex: 'id',
+    key: 'id',
   },
   {
     title: 'Email',
-    dataIndex: 'Email',
-    key: 'Email',
+    dataIndex: 'email',
+    key: 'email',
   },
   {
     title: 'First Name',
-    dataIndex: 'First Name',
-    key: 'First Name',
+    dataIndex: 'firstname',
+    key: 'firstname',
   },
   {
     title: 'Last Name',
-    dataIndex: 'Last Name',
-    key: 'Last Name',
+    dataIndex: 'lastname',
+    key: 'lastname',
   },
   {
     title: 'Avatar',
-    dataIndex: 'Avatar',
-    key: 'Avatar',
+    dataIndex: 'avatar',
+    key: 'avatar',
     render: (Avatar) => (
       <img src={Avatar} />
     )

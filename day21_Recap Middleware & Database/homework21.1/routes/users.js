@@ -7,13 +7,13 @@ const pool  = mysql.createPool({
    host            : 'localhost',
    user            : 'root',
    password        : 'root',
-   database        : 'Devcamp',
+   database        : 'devcamp',
    port            : 8889
 });
 
 
 router.get('/form_user/:id', async function(req, res, next) {
-  const [rows, fields] = await pool.query('SELECT * FROM user where id= "' + req.params.id + '"');
+  const [rows, fields] = await pool.query('SELECT * FROM courses where id= "' + req.params.id + '"');
     res.status(200);
     // console.log('set variable')
     req.myJSON = rows[0];

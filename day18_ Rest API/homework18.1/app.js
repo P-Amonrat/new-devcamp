@@ -12,13 +12,13 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'homework_day18',
+    database: 'project_ecommerce',
     port: 8889
 });
 
 app.get('/api/product/:id', async function (req, res, next) {
     try {
-        const [rows, fields] = await pool.query(`SELECT * FROM product_list WHERE id= ${req.params.id}`);
+        const [rows, fields] = await pool.query(`SELECT * FROM stock WHERE id= ${req.params.id}`);
         if (rows.length > 0) {
             res.status(200).json(rows[0]);
         }
@@ -32,7 +32,7 @@ app.get('/api/product/:id', async function (req, res, next) {
 });
 
 app.delete('/api/product/:id', async function (req, res, next) {
-    const [rows, fields] = await pool.query(`DELETE FROM product_list WHERE id= '${req.params.id}'`)
+    const [rows, fields] = await pool.query(`DELETE FROM stock WHERE id= '${req.params.id}'`)
     if (rows.affectedRows === 1) {
         res.status(200).send("Delete Successfully!!")
     }

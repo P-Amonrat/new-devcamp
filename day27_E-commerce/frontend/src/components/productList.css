@@ -1,0 +1,19 @@
+.productList {
+    /* display: flex; */
+    margin: 20px 50px;
+    justify-items: center;
+    justify-content: center;
+}
+
+.welcome {
+    float: right;
+    margin-right: 50px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    background-color:cornsilk;
+    box-shadow: 2px 2px 2px;
+    font-style:italic;
+    font-size: 15px;
+    font-weight: 500;
+}

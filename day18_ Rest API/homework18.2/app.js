@@ -11,12 +11,12 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'homework_day18',
+    database: 'project_ecommerce',
     port: 8889
 });
 
 app.post('/api/product', async function (req, res, next) {
-    const [rows, fields] = await pool.query(`INSERT into product_list (product_name, stock_left, category)
+    const [rows, fields] = await pool.query(`INSERT into stock (product_name, stock_left, category)
         VALUES ('${req.body.product_name}', '${req.body.stock_left}', '${req.body.category}')`)
     if (rows.affectedRows === 1) {
         res.send("Insert Data Successfully!!").json(rows);
@@ -27,7 +27,7 @@ app.post('/api/product', async function (req, res, next) {
 });
 
 app.put('/api/product/:id', async function (req, res, next) {
-    const [rows, fields] = await pool.query(`UPDATE product_list 
+    const [rows, fields] = await pool.query(`UPDATE stock 
     SET product_name = '${req.body.product_name}', stock_left = '${req.body.stock_left}', category = '${req.body.category}'
     WHERE id= ${req.params.id}`)
     if (rows.affectedRows === 1) {

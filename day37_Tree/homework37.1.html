@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+
+      let tree = {
+        head: {
+          value: 12,
+          left: null,
+          right: {
+            value: 99,
+            left: {
+              value: 37,
+              left: null,
+              right: null,
+            },
+            right: null,
+          },
+        },
+      };
+
+      const input = [88, 3, 27, 100];
+
+      function treeInsert(tree, num) {
+        if (num < tree.value) {
+          if (tree.left == null) {
+            tree.left = num;
+          } else {
+            treeInsert(tree.left, num);
+          }
+        } else {
+          if (tree.right == null) {
+            tree.right = num;
+          } else {
+            treeInsert(tree.right, num);
+          }
+        }
+      }
+
+      for (let i = 0; i < input.length; i++) {
+        treeInsert(tree.head, input[i]);
+      }
+      console.log(tree);
+    </script>
+  </body>
+</html>

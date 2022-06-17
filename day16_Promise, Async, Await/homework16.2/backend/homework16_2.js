@@ -8,11 +8,11 @@ app.get('/api/users', async (req, res, next) => {
       host: 'localhost',
       user: 'root', // <== ระบุให้ถูกต้อง
       password: 'root', // <== ระบุให้ถูกต้อง
-      database: 'Devcamp', // <== ระบุ database ให้ถูกต้อง
+      database: 'devcamp', // <== ระบุ database ให้ถูกต้อง
       port: 8889, // <== ใส่ port ให้ถูกต้อง (default 3306, MAMP ใช้ 8889)
     });
     try {
-      const users = await connection.query('SELECT * from usersData');
+      const users = await connection.query('SELECT * from user');
       res.json({
         users: users[0]
       });
